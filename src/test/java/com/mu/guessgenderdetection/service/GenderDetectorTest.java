@@ -1,4 +1,4 @@
-package com.mu.guessgenderdetection.services;
+package com.mu.guessgenderdetection.service;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

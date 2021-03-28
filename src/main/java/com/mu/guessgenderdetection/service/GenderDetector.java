@@ -1,4 +1,4 @@
-package com.mu.guessgenderdetection.services;
+package com.mu.guessgenderdetection.service;
 
 import org.springframework.stereotype.Service;
 
