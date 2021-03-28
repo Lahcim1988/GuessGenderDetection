@@ -1,5 +1,6 @@
 package com.mu.guessgenderdetection.controller;
 
+import com.mu.guessgenderdetection.enumeration.GenderEnum;
 import com.mu.guessgenderdetection.service.GenderDetector;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,12 +19,12 @@ public class GenderDetectorController {
     }
 
     @RequestMapping(value = "/single/{name}", method = RequestMethod.GET)
-    public String genderByFirstName(@PathVariable String name){
+    public GenderEnum genderByFirstName(@PathVariable String name){
         return genderDetector.result_V1(name);
     }
 
     @RequestMapping(value = "/multi/{names}", method = RequestMethod.GET)
-    public String genderByMultiNames(@PathVariable String names){
+    public GenderEnum genderByMultiNames(@PathVariable String names){
         return genderDetector.result_V2(names);
     }
 

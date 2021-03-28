@@ -1,5 +1,6 @@
 package com.mu.guessgenderdetection.controller;
 
+import com.mu.guessgenderdetection.enumeration.GenderEnum;
 import com.mu.guessgenderdetection.service.GenderDetector;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,6 @@ import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -25,7 +25,7 @@ class GenderDetectorControllerTest {
 
         this.mockMvc.perform(get("/gender/single/Jacob"))
                 .andDo(print()).andExpect(status().isOk())
-                .andExpect(content().string(containsString("male")));
+                .andExpect(content().string(containsString(String.valueOf(GenderEnum.MALE))));
     }
 
     @Test
@@ -33,7 +33,7 @@ class GenderDetectorControllerTest {
 
         this.mockMvc.perform(get("/gender/multi/Jacob Samantha Grace"))
                 .andDo(print()).andExpect(status().isOk())
-                .andExpect(content().string(containsString("female")));
+                .andExpect(content().string(containsString(String.valueOf(GenderEnum.FEMALE))));
     }
 
 }

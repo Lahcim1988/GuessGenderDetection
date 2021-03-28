@@ -1,5 +1,6 @@
 package com.mu.guessgenderdetection.service;
 
+import com.mu.guessgenderdetection.enumeration.GenderEnum;
 import org.springframework.stereotype.Service;
 
 import java.io.FileInputStream;
@@ -8,7 +9,7 @@ import java.util.*;
 
 /**
  * @author Michal
- * @version 1.0
+ * @version 1.1
  * GenderDetector: Class
  * */
 
@@ -24,12 +25,12 @@ public class GenderDetector {
     private final String malePath = ResourceBundle.getBundle("application").getString(MALE_PATH);
     private final String femalePath = ResourceBundle.getBundle("application").getString(FEMALE_PATH);
 
-    public String result_V1(String providedName){
+    public GenderEnum result_V1(String providedName){
         String name = tokens(providedName).get(0);
         return result_V2(name);
     }
 
-    public String result_V2(String providedName){
+    public GenderEnum result_V2(String providedName){
 
         int countMale = 0;
         int countFemale = 0;
@@ -46,11 +47,11 @@ public class GenderDetector {
         }
 
         if(countMale > countFemale){
-            return "male";
+            return GenderEnum.MALE;
         }else if(countMale < countFemale){
-            return "female";
+            return GenderEnum.FEMALE;
         }else {
-            return "INCONCLUSIVE";
+            return GenderEnum.INCONCLUSIVE;
         }
     }
 
