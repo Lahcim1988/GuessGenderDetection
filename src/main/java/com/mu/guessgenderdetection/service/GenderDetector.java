@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author Michal
@@ -25,17 +27,17 @@ public class GenderDetector {
     private final String malePath = ResourceBundle.getBundle("application").getString(MALE_PATH);
     private final String femalePath = ResourceBundle.getBundle("application").getString(FEMALE_PATH);
 
-    public GenderEnum result_V1(String providedName){
+    public GenderEnum firstTokenToCheck(String providedName){
         String name = tokens(providedName).get(0);
-        return result_V2(name);
+        return allTokensToCheck(name);
     }
 
-    public GenderEnum result_V2(String providedName){
+    public GenderEnum allTokensToCheck(String providedNames){
 
         int countMale = 0;
         int countFemale = 0;
 
-        List<String> list = tokens(providedName);
+        List<String> list = tokens(providedNames);
 
         for (String n : list){
             if(ifGenderExist(n, malePath)){
@@ -96,12 +98,9 @@ public class GenderDetector {
         return ifExist;
     }
 
-    public List<String> allMale(){
-        return allTokens(malePath);
-    }
+    public List<String> allNames(){
 
-    public List<String> allFemale(){
-        return allTokens(femalePath);
+        return Stream.concat(allTokens(malePath).stream(), allTokens(femalePath).stream()).collect(Collectors.toList());
     }
 
     private List<String> allTokens(String path){

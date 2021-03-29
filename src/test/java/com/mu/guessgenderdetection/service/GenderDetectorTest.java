@@ -19,7 +19,7 @@ class GenderDetectorTest {
     void shouldReturnMaleFromV1(){
          String providedNames = "Jacob Samantha David";
          GenderEnum expectedResult = GenderEnum.MALE;
-         GenderEnum actual = genderDetector.result_V1(providedNames);
+         GenderEnum actual = genderDetector.firstTokenToCheck(providedNames);
          Assertions.assertEquals(expectedResult, actual);
      }
 
@@ -27,7 +27,7 @@ class GenderDetectorTest {
     void shouldReturnFemaleFromV2(){
          String providedNames = "Jacob Samantha Grace";
          GenderEnum expectedResult = GenderEnum.FEMALE;
-         GenderEnum actual = genderDetector.result_V2(providedNames);
+         GenderEnum actual = genderDetector.allTokensToCheck(providedNames);
          Assertions.assertEquals(expectedResult, actual);
      }
 
@@ -35,7 +35,7 @@ class GenderDetectorTest {
     void shouldReturnInconclusive(){
          String providedNames = "Jacob Samantha NoName";
          GenderEnum expectedResult = GenderEnum.INCONCLUSIVE;
-         GenderEnum actual = genderDetector.result_V2(providedNames);
+         GenderEnum actual = genderDetector.allTokensToCheck(providedNames);
          Assertions.assertEquals(expectedResult, actual);
      }
 

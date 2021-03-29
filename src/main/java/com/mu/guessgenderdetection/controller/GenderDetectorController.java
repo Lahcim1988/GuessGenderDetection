@@ -18,24 +18,18 @@ public class GenderDetectorController {
         this.genderDetector = genderDetector;
     }
 
-    @RequestMapping(value = "/single/{name}", method = RequestMethod.GET)
-    public GenderEnum genderByFirstName(@PathVariable String name){
-        return genderDetector.result_V1(name);
+    @RequestMapping(value = {"/guess/{names}/{algo}", "/guess/{names}"}, method = RequestMethod.GET)
+    public GenderEnum guessGenderByProvidedNamesAndAlgoVariant(@PathVariable(required = false) Long algo, @PathVariable String names){
+        if(algo != null){
+            return genderDetector.firstTokenToCheck(names);
+        }else{
+            return genderDetector.allTokensToCheck(names);
+        }
     }
 
-    @RequestMapping(value = "/multi/{names}", method = RequestMethod.GET)
-    public GenderEnum genderByMultiNames(@PathVariable String names){
-        return genderDetector.result_V2(names);
-    }
-
-    @RequestMapping(value = "/all/male", method = RequestMethod.GET)
-    public List<String> allMaleNames(){
-        return genderDetector.allMale();
-    }
-
-    @RequestMapping(value = "/all/female", method = RequestMethod.GET)
-    public List<String> allFemaleNames(){
-        return genderDetector.allFemale();
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
+    public List<String> allNames(){
+        return genderDetector.allNames();
     }
 
 }

@@ -23,7 +23,7 @@ class GenderDetectorControllerTest {
     @Test
     public void shouldReturnMaleGenderForV1() throws Exception {
 
-        this.mockMvc.perform(get("/gender/single/Jacob"))
+        this.mockMvc.perform(get("/gender/guess/Jacob/1"))
                 .andDo(print()).andExpect(status().isOk())
                 .andExpect(content().string(containsString(String.valueOf(GenderEnum.MALE))));
     }
@@ -31,7 +31,7 @@ class GenderDetectorControllerTest {
     @Test
     public void shouldReturnFemaleGenderForV2() throws Exception {
 
-        this.mockMvc.perform(get("/gender/multi/Jacob Samantha Grace"))
+        this.mockMvc.perform(get("/gender/guess/Jacob Samantha Grace"))
                 .andDo(print()).andExpect(status().isOk())
                 .andExpect(content().string(containsString(String.valueOf(GenderEnum.FEMALE))));
     }
