@@ -38,7 +38,6 @@ public class GenderDetectorImpl implements GenderDetector{
         for (String name : namesList){
             if(ifGenderExist(name, MALE_PATH)){
                 countMale++;
-                continue;
             }
             if(ifGenderExist(name, FEMALE_PATH)){
                 countFemale++;
