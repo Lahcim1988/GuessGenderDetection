@@ -9,7 +9,7 @@ import java.util.*;
 
 /**
  * @author Michal
- * @version 1.2
+ * @version 1.4
  * GenderDetector: Class
  * */
 
@@ -23,8 +23,12 @@ public class GenderDetectorImpl implements GenderDetector{
     private final String FEMALE_PATH = ResourceBundle.getBundle("application").getString("file.female.source");
 
     public GenderEnum firstTokenToCheck(String providedName){
-        String name = tokens(providedName).get(0);
-        return allTokensToCheck(name);
+        String getFirstName = splitStringToTokens(providedName).get(0);
+        return getGenderType(getFirstName);
+    }
+
+    private GenderEnum getGenderType(String firstName){
+        return ifGenderExist(firstName, MALE_PATH) ? GenderEnum.MALE : ifGenderExist(firstName, FEMALE_PATH) ? GenderEnum.FEMALE : GenderEnum.INCONCLUSIVE;
     }
 
     public GenderEnum allTokensToCheck(String providedNames){
@@ -32,29 +36,27 @@ public class GenderDetectorImpl implements GenderDetector{
         int countMale = 0;
         int countFemale = 0;
 
-        List<String> list = tokens(providedNames);
+        List<String> list = splitStringToTokens(providedNames);
 
         for (String n : list){
             if(ifGenderExist(n, MALE_PATH)){
                 countMale++;
+                continue;
             }
             if(ifGenderExist(n, FEMALE_PATH)){
                 countFemale++;
             }
         }
-        if(countMale > countFemale){
-            return GenderEnum.MALE;
-        }else if(countMale < countFemale){
-            return GenderEnum.FEMALE;
-        }else {
-            return GenderEnum.INCONCLUSIVE;
-        }
+        return getGenderTypeForAllTokens(countMale, countFemale);
     }
 
-    private List<String> tokens(String name){
+    private GenderEnum getGenderTypeForAllTokens(int countMale, int countFemale){
+        return (countMale > countFemale) ? GenderEnum.MALE : (countMale < countFemale) ? GenderEnum.FEMALE : GenderEnum.INCONCLUSIVE;
+    }
+
+    private List<String> splitStringToTokens(String name){
         List<String> names = new ArrayList<>();
         StringTokenizer myToken = new StringTokenizer(name, " ");
-
         while (myToken.hasMoreTokens()){
             names.add(myToken.nextToken());
         }
@@ -64,9 +66,7 @@ public class GenderDetectorImpl implements GenderDetector{
     private boolean ifGenderExist(String name, String path){
         boolean ifExist = false;
 
-        try{
-            inputStream = new FileInputStream(path);
-            sc = new Scanner(inputStream, "UTF-8");
+        try(Scanner sc = new Scanner(new FileInputStream(path), "UTF-8")){
             while (sc.hasNextLine()){
                 String line = sc.nextLine();
                 if(line.equals(name)){
@@ -76,17 +76,6 @@ public class GenderDetectorImpl implements GenderDetector{
             }
         }catch (IOException e){
             e.printStackTrace();
-        }finally {
-            if(inputStream != null){
-                try {
-                    inputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            if(sc != null){
-                sc.close();
-            }
         }
         return ifExist;
     }
