@@ -1,7 +1,8 @@
 package com.mu.guessgenderdetection.controller;
 
 import com.mu.guessgenderdetection.enumeration.GenderEnum;
-import com.mu.guessgenderdetection.service.GenderDetector;
+import com.mu.guessgenderdetection.service.GenderDetectorImpl;
+import com.mu.guessgenderdetection.service.GenderListImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,11 +12,13 @@ import java.util.List;
 @RequestMapping(path = "/gender", produces = "application/json")
 public class GenderDetectorController {
 
-    private final GenderDetector genderDetector;
+    private final GenderDetectorImpl genderDetector;
+    private final GenderListImpl genderList;
 
     @Autowired
-    public GenderDetectorController(GenderDetector genderDetector){
+    public GenderDetectorController(GenderDetectorImpl genderDetector, GenderListImpl genderList){
         this.genderDetector = genderDetector;
+        this.genderList = genderList;
     }
 
     @RequestMapping(value = {"/guess/{names}/{algo}", "/guess/{names}"}, method = RequestMethod.GET)
@@ -29,7 +32,7 @@ public class GenderDetectorController {
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public List<String> allNames(){
-        return genderDetector.allNames();
+        return genderList.allNames();
     }
 
 }

@@ -8,11 +8,11 @@ import org.junit.jupiter.api.Test;
 
 class GenderDetectorTest {
 
-     private GenderDetector genderDetector;
+     private GenderDetectorImpl genderDetector;
 
      @BeforeEach
      void setGenderDetector(){
-         genderDetector = new GenderDetector();
+         genderDetector = new GenderDetectorImpl();
      }
 
      @Test
