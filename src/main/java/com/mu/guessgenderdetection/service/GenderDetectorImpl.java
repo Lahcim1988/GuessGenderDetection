@@ -16,9 +16,6 @@ import java.util.*;
 @Service
 public class GenderDetectorImpl implements GenderDetector{
 
-    private FileInputStream inputStream = null;
-    private Scanner sc = null;
-
     private final String MALE_PATH = ResourceBundle.getBundle("application").getString("file.male.source");
     private final String FEMALE_PATH = ResourceBundle.getBundle("application").getString("file.female.source");
 
@@ -36,14 +33,14 @@ public class GenderDetectorImpl implements GenderDetector{
         int countMale = 0;
         int countFemale = 0;
 
-        List<String> list = splitStringToTokens(providedNames);
+        List<String> namesList = splitStringToTokens(providedNames);
 
-        for (String n : list){
-            if(ifGenderExist(n, MALE_PATH)){
+        for (String name : namesList){
+            if(ifGenderExist(name, MALE_PATH)){
                 countMale++;
                 continue;
             }
-            if(ifGenderExist(n, FEMALE_PATH)){
+            if(ifGenderExist(name, FEMALE_PATH)){
                 countFemale++;
             }
         }
